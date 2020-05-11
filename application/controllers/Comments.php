@@ -13,10 +13,11 @@ class Comments extends CI_Controller {
 
 	public function store($id)
 	{
+		$this->load->library('session');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('content', 'Content', 'required');
+		$this->form_validation->set_rules('content', '本文', 'required');
 
 		if ($this->form_validation->run() === FALSE)
 		{

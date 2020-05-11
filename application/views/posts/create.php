@@ -1,3 +1,4 @@
+<?php if( isset($_SESSION['name']) && $_SESSION['time'] + 3600 > time()): ?>
 <div class="container mt-4">
   <div class="border p-4">
     <h1 class="h3 mb-4">
@@ -7,7 +8,7 @@
     <form method="POST" action=<?php echo site_url('posts/store'); ?>>
 
       <fieldset class="mb-4">
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="name">
             名前
           </label>
@@ -18,7 +19,7 @@
           value="<?php echo set_value('name'); ?>"
           type="text"
           >
-        </div>
+        </div> -->
         <div class="form-group">
           <label for="title">
             タイトル
@@ -60,3 +61,6 @@
     </form>
   </div>
 </div>
+<?php else: ?>
+  <?php redirect ("users/login"); ?>
+<?php endif; ?>

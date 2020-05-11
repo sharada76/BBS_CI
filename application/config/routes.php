@@ -55,6 +55,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['posts/(:any)'] = 'posts/$1';
 $route['posts/(:any)/(:any)'] = 'posts/$1/$2';
 $route['posts/comments/(:any)/(:any)'] = 'comments/$1/$2';
+$route['users/(:any)'] = 'users/$1';
+$route['likes/(:any)/(:any)/(:any)'] = 'likes/$1/$2/$3';
 $route['posts'] = 'posts';
-$route['default_controller'] = 'posts';
+$route['default_controller'] = 'users';
 

@@ -10,33 +10,47 @@ class Posts_model extends CI_Model {
         {
         if ($id === FALSE)
         {
-            $sql = "SELECT *, (SELECT count(*) from comments AS C WHERE C. post_id = P.id) as count FROM posts AS P ORDER BY created_at desc";
+            $sql = "SELECT *,
+             (SELECT count(*) from comments AS C WHERE C.post_id = P.id) as comment_count,
+             (SELECT count(*) from likes AS L WHERE L.post_id = P.id) as like_count
+             FROM posts AS P ORDER BY created_at desc";
+
             $query = $this->db->query($sql);
             return $query->result_array();
         }
 
-        $query = $this->db->get_where('posts', array('id' => $id));
-        return $query->row_array();
+        // $query = $this->db->get_where('posts', array('id' => $id));
+        // return $query->row_array();
+
+            $sql = "SELECT *,
+            (SELECT count(*) from likes AS L WHERE L.post_id = P.id) as like_count
+            FROM posts AS P
+            WHERE id = ";
+
+            $sql .= $id;
+
+            $query = $this->db->query($sql);
+
+            return $query->row_array();
         }
 
         public function set_posts()
         {
             $this->load->helper('url');
 
-
-            if (empty($this->input->post('name')))
-            {
-                    $name = 'anonymous';
-            }
-            else
-            {
-                    $name =$this->input->post('name');
-            }
+            // if (empty($this->input->post('name')))
+            // {
+            //         $name = 'anonymous';
+            // }
+            // else
+            // {
+            //         $name =$this->input->post('name');
+            // }
 
             $data = array(
                 'title' => $this->input->post('title'),
                 'content' => $this->input->post('content'),
-                'name' => $name
+                'name' => $this->session->userdata('name')
             );
 
             return $this->db->insert('posts', $data);

@@ -8,12 +8,23 @@ class Posts extends CI_Controller {
 			parent::__construct();
 			$this->load->model('posts_model');
 			$this->load->model('comments_model');
+			$this->load->model('likes_model');
 			$this->load->helper('url_helper');
 	}
 
 	public function index()
 	{
+		$this->load->library('session');
+
 		$data['posts'] = $this->posts_model->get_posts();
+
+		$likes = $this->likes_model->get_likes_post($_SESSION['name']);
+		$data['likes'] = array();
+
+		foreach($likes as $like)
+		{
+			array_push($data['likes'], $like['post_id']);
+		}
 
 		$this->load->view('templates/header');
 		$this->load->view('posts/index', $data);
@@ -22,14 +33,24 @@ class Posts extends CI_Controller {
 
 	public function view($id = NULL)
 	{
+		$this->load->library('session');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$data['post_item'] = $this->posts_model->get_posts($id);
 		$data['comments'] = $this->comments_model->get_comments($id);
+		$data['is_liked'] = $this->likes_model->get_like($id);
 
 		if (empty($data['post_item']))
 		{
-				show_404();
+			show_404();
+		}
+
+		$likes = $this->likes_model->get_likes_comment($_SESSION['name']);
+		$data['likes'] = array();
+
+		foreach($likes as $like)
+		{
+			array_push($data['likes'], $like['comment_id']);
 		}
 
 		$this->load->view('templates/header');
@@ -39,11 +60,12 @@ class Posts extends CI_Controller {
 
 	public function store()
 	{
+		$this->load->library('session');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('title', 'Title', 'required');
-		$this->form_validation->set_rules('content', 'Content', 'required');
+		$this->form_validation->set_rules('title', 'タイトル', 'required');
+		$this->form_validation->set_rules('content', '本文', 'required');
 
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -68,8 +90,8 @@ class Posts extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('title', 'Title', 'required');
-		$this->form_validation->set_rules('content', 'content', 'required');
+		$this->form_validation->set_rules('title', 'タイトル', 'required');
+		$this->form_validation->set_rules('content', '本文', 'required');
 
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -80,9 +102,9 @@ class Posts extends CI_Controller {
 		}
 		else
 		{
-		$this->load->view('templates/header');
-		$this->load->view('posts/create');
-		$this->load->view('templates/footer');
+			$this->load->view('templates/header');
+			$this->load->view('posts/create');
+			$this->load->view('templates/footer');
 		}
 	}
 
@@ -102,8 +124,8 @@ class Posts extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('title', 'Title', 'required');
-		$this->form_validation->set_rules('content', 'Content', 'required');
+		$this->form_validation->set_rules('title', 'タイトル', 'required');
+		$this->form_validation->set_rules('content', '本文', 'required');
 
 		if ($this->form_validation->run() === FALSE)
 		{

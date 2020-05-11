@@ -1,3 +1,4 @@
+<?php if( isset($_SESSION['name']) && $_SESSION['time'] + 3600 > time()): ?>
 <div class="container mt-4">
   <div class="border p-4">
     <h1 class="h5 mb-4">
@@ -48,3 +49,6 @@
     </form>
   </div>
 </div>
+<?php else: ?>
+  <?php redirect ("users/login"); ?>
+<?php endif; ?>
