@@ -15,14 +15,7 @@
           </label>
           <div class="row">
             <div class="col-md-4">
-              <input
-              id="name"
-              name="name"
-              class="form-control"
-              value="<?php echo set_value('name'); ?>"
-              type="text"
-              size="20"
-              >
+              <input id="name" name="name" class="form-control" value="<?php echo set_value('name'); ?>" type="text" size="20">
             </div>
           </div>
           <?php echo form_error('name', '<div class="text-danger">', '</div>'); ?>
@@ -33,14 +26,7 @@
           </label>
           <div class="row">
             <div class="col-md-4">
-              <input
-              id="password"
-              name="password"
-              class="form-control"
-              value="<?php echo set_value('password'); ?>"
-              type="password"
-              size="20"
-              >
+              <input id="password" name="password" class="form-control" value="<?php echo set_value('password'); ?>" type="password" size="20">
             </div>
           </div>
           <?php echo form_error('password', '<div class="text-danger">', '</div>'); ?>
@@ -53,9 +39,9 @@
         </div>
         <?php echo form_error('login_failed', '<div class="text-danger">', '</div>'); ?>
         <div class="mt-4">
-        <a href="<?php echo site_url('users/create'); ?>">
-          <u>新規ユーザー登録はこちら</u>
-        </a>
+          <a href="<?php echo site_url('users/create'); ?>">
+            <u>新規ユーザー登録はこちら</u>
+          </a>
         </div>
       </fieldset>
     </form>
