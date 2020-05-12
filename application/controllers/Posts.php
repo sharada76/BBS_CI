@@ -78,10 +78,7 @@ class Posts extends CI_Controller {
 		{
 			$this->posts_model->set_posts();
 
-			$data['posts'] = $this->posts_model->get_posts();
-			$this->load->view('templates/header');
-			$this->load->view('posts/index', $data);
-			$this->load->view('templates/footer');
+			redirect('/posts/index');
 		}
 	}
 
@@ -141,11 +138,7 @@ class Posts extends CI_Controller {
 		{
 			$this->posts_model->edit_posts($id);
 
-			$data['post_item'] = $this->posts_model->get_posts($id);
-			$data['comments'] = $this->comments_model->get_comments($id);
-			$this->load->view('templates/header');
-			$this->load->view('posts/show', $data);
-			$this->load->view('templates/footer');
+			redirect('/posts/view/'. $id);
 		}
 	}
 
