@@ -89,6 +89,7 @@ class Posts extends CI_Controller {
 	{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->load->library('session');
 
 		$this->form_validation->set_rules('title', 'タイトル', 'required');
 		$this->form_validation->set_rules('content', '本文', 'required');
@@ -112,6 +113,7 @@ class Posts extends CI_Controller {
 	{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->load->library('session');
 		$data['post_item'] = $this->posts_model->get_posts($id);
 
 		$this->load->view('templates/header');
@@ -123,6 +125,7 @@ class Posts extends CI_Controller {
 	{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->load->library('session');
 
 		$this->form_validation->set_rules('title', 'タイトル', 'required');
 		$this->form_validation->set_rules('content', '本文', 'required');
